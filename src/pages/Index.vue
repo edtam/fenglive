@@ -1,9 +1,10 @@
 <script setup>
 import { ref } from 'vue'
-import FlvPlayerVue from '../components/FlvPlayer.vue'
 import { useChannels } from '../composables/useChannels'
 import { usePlayUrl } from '../composables/usePlayUrl'
 import { fixImgUrl } from '../js/util'
+import FlvPlayer from '../components/FlvPlayer.vue'
+import Playtips from '../components/Playtips.vue'
 
 const { data: channels, isFetching } = useChannels()
 
@@ -31,7 +32,9 @@ function clickChannel({ _id }) {
     </div>
   </div>
 
-  <FlvPlayerVue :url="playUrl" />
+  <FlvPlayer :url="playUrl" />
+
+  <Playtips :url="playUrl" />
 </template>
 
 <style lang="scss" scoped>
