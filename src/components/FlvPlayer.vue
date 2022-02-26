@@ -42,8 +42,6 @@ watch(
 <style lang="scss" scoped>
 video {
   display: block;
-  width: 800px;
-  height: 450px;
-  margin: 0 auto;
+  width: 100%;
 }
 </style>

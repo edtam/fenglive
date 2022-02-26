@@ -19,22 +19,32 @@ function clickChannel({ _id }) {
 <template>
   <p v-if="isFetching">正在加载频道...</p>
 
-  <div class="channels">
-    <div
-      v-for="tv in channels"
-      :key="tv._id"
-      class="channel"
-      :class="{ 'channel--active': tv._id === channelId }"
-      @click="clickChannel(tv)"
-    >
-      <img :src="fixImgUrl(tv.logo)" alt="" />
-      <strong>{{ tv.title }}</strong>
-    </div>
-  </div>
+  <el-row justify="center" :gutter="12">
+    <el-space wrap>
+      <el-card
+        v-for="tv in channels"
+        :key="tv._id"
+        class="channel"
+        :shadow="tv._id === channelId ? 'always' : 'never'"
+        :body-style="{ padding: '8px' }"
+        @click="clickChannel(tv)"
+      >
+        <el-space>
+          <img :src="fixImgUrl(tv.logo)" alt="" />
+          <strong>{{ tv.title }}</strong>
+        </el-space>
+      </el-card>
+    </el-space>
+  </el-row>
 
-  <FlvPlayer :url="playUrl" />
+  <el-divider />
 
-  <Playtips :url="playUrl" />
+  <el-row justify="center">
+    <el-col :lg="16">
+      <FlvPlayer :url="playUrl" />
+      <Playtips :url="playUrl" />
+    </el-col>
+  </el-row>
 </template>
 
 <style lang="scss" scoped>
@@ -44,15 +54,8 @@ function clickChannel({ _id }) {
   margin-bottom: 8px;
 }
 .channel {
-  display: flex;
-  align-items: center;
-  padding-left: 8px;
-  padding-right: 24px;
   font-size: 24px;
   cursor: pointer;
-  &--active {
-    background-color: #eee;
-  }
   img {
     width: 80px;
     height: 80px;
