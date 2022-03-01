@@ -17,25 +17,33 @@ const urlTest = computed(() => {
 <template>
   <div v-if="url" class="play-tips">
     <el-link type="info" @click="toggleShow">无法播放？</el-link>
-    <p v-if="isShow">
-      <span>点击</span>
-      <a :href="urlTest" target="_blank">链接</a>
-      <br />
-      <span>在新页面中依次点击</span>
-      <br />
-      <span>1、高级；2、继续前往访问</span>
-      <br />
-      <span>完成后返回本页面，刷新重试</span>
-    </p>
   </div>
+
+  <el-dialog title="提示" v-model="isShow">
+    <el-timeline>
+      <el-timeline-item>
+        <el-link type="primary" :href="urlTest" target="_blank">
+          点击链接
+        </el-link>
+      </el-timeline-item>
+      <el-timeline-item>
+        <span>在新页面中依次点击</span>
+      </el-timeline-item>
+      <el-timeline-item>
+        <span>1、高级</span>
+      </el-timeline-item>
+      <el-timeline-item>
+        <span>2、继续前往访问</span>
+      </el-timeline-item>
+      <el-timeline-item>
+        <span>完成后返回本页面，刷新重试</span>
+      </el-timeline-item>
+    </el-timeline>
+  </el-dialog>
 </template>
 
 <style lang="scss" scoped>
 .play-tips {
   text-align: center;
-}
-.title {
-  color: gray;
-  cursor: pointer;
 }
 </style>
