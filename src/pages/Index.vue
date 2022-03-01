@@ -48,17 +48,12 @@ function clickChannel({ _id }) {
 </template>
 
 <style lang="scss" scoped>
-.channels {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 8px;
-}
 .channel {
   font-size: 24px;
   cursor: pointer;
   img {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
   }
 }
 </style>
