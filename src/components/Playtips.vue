@@ -1,12 +1,9 @@
 <script setup>
-import { useToggle } from '@vueuse/core'
 import { computed } from 'vue'
 
 const props = defineProps({
   url: String,
 })
-
-const [isShow, toggleShow] = useToggle()
 
 const urlTest = computed(() => {
   const { host, pathname } = new URL(props.url)
@@ -15,35 +12,23 @@ const urlTest = computed(() => {
 </script>
 
 <template>
-  <div v-if="url" class="play-tips">
-    <el-link type="info" @click="toggleShow">无法播放？</el-link>
-  </div>
+  <div v-if="url">
+    <p>首次打开时无法播放，需按以下步骤操作</p>
 
-  <el-dialog title="提示" v-model="isShow">
-    <el-timeline>
-      <el-timeline-item>
+    <ul>
+      <li>
         <el-link type="primary" :href="urlTest" target="_blank">
           点击链接
         </el-link>
-      </el-timeline-item>
-      <el-timeline-item>
-        <span>在新页面中依次点击</span>
-      </el-timeline-item>
-      <el-timeline-item>
-        <span>1、高级</span>
-      </el-timeline-item>
-      <el-timeline-item>
-        <span>2、继续前往访问</span>
-      </el-timeline-item>
-      <el-timeline-item>
-        <span>完成后返回本页面，刷新重试</span>
-      </el-timeline-item>
-    </el-timeline>
-  </el-dialog>
+      </li>
+      <li>
+        在新页面中依次点击
+        <ul>
+          <li>高级</li>
+          <li>继续前往访问</li>
+        </ul>
+      </li>
+      <li>完成后返回本页面，刷新重试</li>
+    </ul>
+  </div>
 </template>
-
-<style lang="scss" scoped>
-.play-tips {
-  text-align: center;
-}
-</style>
