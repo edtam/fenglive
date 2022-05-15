@@ -9,11 +9,15 @@ const urlTest = computed(() => {
   const { host, pathname } = new URL(props.url)
   return `https://${host}${pathname}`
 })
+
+function reload() {
+  location.reload()
+}
 </script>
 
 <template>
   <div v-if="url">
-    <p>首次打开时无法播放，需按以下步骤操作</p>
+    <p>无法播放时，可能需按以下步骤操作</p>
 
     <ul>
       <li>
@@ -28,7 +32,11 @@ const urlTest = computed(() => {
           <li>继续前往访问</li>
         </ul>
       </li>
-      <li>完成后返回本页面，刷新重试</li>
+      <li>
+        完成后返回本页面，
+        <el-link type="primary" @click="reload">刷新</el-link>
+        重试
+      </li>
     </ul>
   </div>
 </template>

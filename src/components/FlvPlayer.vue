@@ -5,6 +5,7 @@ import { nextTick, ref, watch } from 'vue'
 const props = defineProps({
   url: String,
 })
+const emit = defineEmits(['error'])
 
 const videoEl = ref(null)
 let player = null
@@ -20,6 +21,9 @@ function playVideo(url) {
     type: 'flv',
     url,
     isLive: true,
+  })
+  player.on('error', (err) => {
+    emit('error', err)
   })
   player.attachMediaElement(videoEl.value)
   player.load()

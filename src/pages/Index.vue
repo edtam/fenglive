@@ -1,5 +1,5 @@
 <script setup>
-import { useStorage } from '@vueuse/core'
+import { useStorage, useToggle } from '@vueuse/core'
 import { useChannels } from '../composables/useChannels'
 import { usePlayUrl } from '../composables/usePlayUrl'
 import { fixImgUrl } from '../js/util'
@@ -13,7 +13,10 @@ const { playUrl } = usePlayUrl(channelId)
 
 function clickChannel({ _id }) {
   channelId.value = _id
+  toggleTips(false)
 }
+
+const [isShowTips, toggleTips] = useToggle(false)
 </script>
 
 <template>
@@ -41,8 +44,8 @@ function clickChannel({ _id }) {
 
   <el-row justify="center">
     <el-col :lg="16">
-      <FlvPlayer :url="playUrl" />
-      <Playtips :url="playUrl" />
+      <Playtips v-if="isShowTips" :url="playUrl" />
+      <FlvPlayer :url="playUrl" @error="toggleTips(true)" />
     </el-col>
   </el-row>
 </template>
