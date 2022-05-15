@@ -37,10 +37,28 @@ watch(
     playVideo(url)
   }
 )
+
+function onVideoPlay() {
+  if (videoEl.value.muted) {
+    ElNotification({
+      title: '提示',
+      message: '由于浏览器限制，请手动打开视频声音',
+      type: 'info',
+      position: 'bottom-right',
+    })
+  }
+}
 </script>
 
 <template>
-  <video v-if="url" ref="videoEl" controls autoplay></video>
+  <video
+    v-if="url"
+    ref="videoEl"
+    controls
+    autoplay
+    muted
+    @play="onVideoPlay"
+  ></video>
 </template>
 
 <style lang="scss" scoped>
