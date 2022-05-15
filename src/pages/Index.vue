@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { useStorage } from '@vueuse/core'
 import { useChannels } from '../composables/useChannels'
 import { usePlayUrl } from '../composables/usePlayUrl'
 import { fixImgUrl } from '../js/util'
@@ -8,7 +8,7 @@ import Playtips from '../components/Playtips.vue'
 
 const { data: channels, isFetching } = useChannels()
 
-const channelId = ref('')
+const channelId = useStorage('channel-id', '')
 const { playUrl } = usePlayUrl(channelId)
 
 function clickChannel({ _id }) {
