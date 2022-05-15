@@ -6,7 +6,7 @@ import { fixImgUrl } from '../js/util'
 import FlvPlayer from '../components/FlvPlayer.vue'
 import Playtips from '../components/Playtips.vue'
 
-const { data: channels, isFetching } = useChannels()
+const { data: channels, isFetching, error } = useChannels()
 
 const channelId = useStorage('channel-id', '')
 const { playUrl } = usePlayUrl(channelId)
@@ -21,6 +21,7 @@ const [isShowTips, toggleTips] = useToggle(false)
 
 <template>
   <p v-if="isFetching">正在加载频道...</p>
+  <p v-if="error">获取频道失败</p>
 
   <el-row justify="center" :gutter="12">
     <el-space wrap>
