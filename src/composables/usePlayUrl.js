@@ -1,3 +1,4 @@
+import { syncRef } from '@vueuse/core'
 import { computed, ref, watch } from 'vue'
 import { useFengFetch } from './useFengFetch'
 
@@ -6,9 +7,12 @@ export function usePlayUrl(liveId) {
   const liveUrl = computed(() => {
     return `/api/v3/hub/live/auth-url?live_id=${liveId.value}&live_qa=HD`
   })
+  const loading = ref(false)
 
   function updatePlayUrl() {
-    const { data, onFetchResponse } = useFengFetch(liveUrl).json()
+    loading.value = true
+    const { data, onFetchResponse, isFetching } = useFengFetch(liveUrl).json()
+    syncRef(isFetching, loading)
     onFetchResponse(() => {
       playUrl.value = data.value.data.live_url
     })
@@ -22,5 +26,5 @@ export function usePlayUrl(liveId) {
     { immediate: true }
   )
 
-  return { playUrl }
+  return { playUrl, loading }
 }

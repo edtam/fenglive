@@ -15,7 +15,7 @@ if (channelIdCache.value) {
   channelId.value = channelIdCache.value
   channelIdCache.value = ''
 }
-const { playUrl } = usePlayUrl(channelId)
+const { playUrl, loading: isFetchingUrl } = usePlayUrl(channelId)
 
 function clickChannel({ _id }) {
   channelId.value = _id
@@ -34,7 +34,7 @@ function reloadPage() {
   <p v-if="isFetching">正在加载频道...</p>
   <p v-if="error">获取频道失败</p>
 
-  <el-row justify="center" :gutter="12">
+  <el-row justify="center" :gutter="12" v-loading="isFetchingUrl">
     <el-space wrap>
       <el-card
         v-for="tv in channels"
