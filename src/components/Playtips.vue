@@ -4,15 +4,12 @@ import { computed } from 'vue'
 const props = defineProps({
   url: String,
 })
+const emit = defineEmits(['reload'])
 
 const urlTest = computed(() => {
   const { host, pathname } = new URL(props.url)
   return `https://${host}${pathname}`
 })
-
-function reload() {
-  location.reload()
-}
 </script>
 
 <template>
@@ -34,7 +31,7 @@ function reload() {
       </li>
       <li>
         完成后返回本页面，
-        <el-link type="primary" @click="reload">刷新</el-link>
+        <el-link type="primary" @click="emit('reload')">刷新</el-link>
         重试
       </li>
     </ul>

@@ -1,14 +1,20 @@
 <script setup>
-import { useStorage, useToggle } from '@vueuse/core'
+import { useSessionStorage, useToggle } from '@vueuse/core'
 import { useChannels } from '../composables/useChannels'
 import { usePlayUrl } from '../composables/usePlayUrl'
 import { fixImgUrl } from '../js/util'
 import FlvPlayer from '../components/FlvPlayer.vue'
 import Playtips from '../components/Playtips.vue'
+import { ref } from 'vue'
 
 const { data: channels, isFetching, error } = useChannels()
 
-const channelId = useStorage('channel-id', '')
+const channelId = ref('')
+const channelIdCache = useSessionStorage('channel-id', '')
+if (channelIdCache.value) {
+  channelId.value = channelIdCache.value
+  channelIdCache.value = ''
+}
 const { playUrl } = usePlayUrl(channelId)
 
 function clickChannel({ _id }) {
@@ -17,6 +23,11 @@ function clickChannel({ _id }) {
 }
 
 const [isShowTips, toggleTips] = useToggle(false)
+
+function reloadPage() {
+  channelIdCache.value = channelId.value
+  location.reload()
+}
 </script>
 
 <template>
@@ -45,7 +56,7 @@ const [isShowTips, toggleTips] = useToggle(false)
 
   <el-row justify="center">
     <el-col :lg="16">
-      <Playtips v-if="isShowTips" :url="playUrl" />
+      <Playtips v-if="isShowTips" :url="playUrl" @reload="reloadPage" />
       <FlvPlayer :url="playUrl" @error="toggleTips(true)" />
     </el-col>
   </el-row>
