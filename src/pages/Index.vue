@@ -5,6 +5,7 @@ import { usePlayUrl } from '../composables/usePlayUrl'
 import { fixImgUrl } from '../js/util'
 import FlvPlayer from '../components/FlvPlayer.vue'
 import Playtips from '../components/Playtips.vue'
+import SiteTips from '../components/SiteTips.vue'
 import { ref } from 'vue'
 
 const { data: channels, isFetching, error } = useChannels()
@@ -58,6 +59,7 @@ function reloadPage() {
     <el-col :lg="16">
       <Playtips v-if="isShowTips" :url="playUrl" @reload="reloadPage" />
       <FlvPlayer :url="playUrl" @error="toggleTips(true)" />
+      <SiteTips />
     </el-col>
   </el-row>
 </template>
